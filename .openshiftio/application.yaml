@@ -6,6 +6,9 @@ metadata:
     description: This template creates a Build Configuration using an S2I builder.
     tags: instant-app
 parameters:
+  - name: SUFFIX_NAME
+    description: The suffix name for the template objects
+    displayName: Suffix name
   - name: SOURCE_REPOSITORY_URL
     description: The source URL for the application
     displayName: Source URL
@@ -30,12 +33,12 @@ objects:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: nodejs-health-check
+      name: nodejs-health-check${SUFFIX_NAME}
     spec: {}
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: runtime
+      name: runtime${SUFFIX_NAME}
     spec:
       tags:
         - name: latest
@@ -45,12 +48,12 @@ objects:
   - apiVersion: v1
     kind: BuildConfig
     metadata:
-      name: nodejs-health-check
+      name: nodejs-health-check${SUFFIX_NAME}
     spec:
       output:
         to:
           kind: ImageStreamTag
-          name: 'nodejs-health-check:latest'
+          name: 'nodejs-health-check${SUFFIX_NAME}:latest'
       postCommit: {}
       resources: {}
       source:
@@ -63,7 +66,7 @@ objects:
         sourceStrategy:
           from:
             kind: ImageStreamTag
-            name: 'runtime:latest'
+            name: 'runtime${SUFFIX_NAME}:latest'
           incremental: true
       triggers:
         - github:
@@ -86,7 +89,7 @@ objects:
         project: nodejs-health-check
         provider: nodeshift
     metadata:
-      name: nodejs-health-check
+      name: nodejs-health-check${SUFFIX_NAME}
       labels:
         provider: nodeshift
         expose: 'true'
@@ -95,7 +98,7 @@ objects:
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
-      name: nodejs-health-check
+      name: nodejs-health-check${SUFFIX_NAME}
       labels:
         app: nodejs-health-check
         provider: nodeshift
@@ -125,8 +128,8 @@ objects:
                 periodSeconds: 3
                 successThreshold: 1
                 timeoutSeconds: 1
-              image: nodejs-health-check
-              name: nodejs-health-check
+              image: nodejs-health-check${SUFFIX_NAME}
+              name: nodejs-health-check${SUFFIX_NAME}
               securityContext:
                 privileged: false
               ports:
@@ -150,10 +153,10 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - nodejs-health-check
+              - nodejs-health-check${SUFFIX_NAME}
             from:
               kind: ImageStreamTag
-              name: 'nodejs-health-check:latest'
+              name: 'nodejs-health-check${SUFFIX_NAME}:latest'
   - apiVersion: v1
     kind: Route
     metadata:
@@ -161,10 +164,10 @@ objects:
         project: nodejs-health-check
         provider: nodeshift
         version: 2.0.0
-      name: nodejs-health-check
+      name: nodejs-health-check${SUFFIX_NAME}
     spec:
       port:
         targetPort: 8080
       to:
         kind: Service
-        name: nodejs-health-check
+        name: nodejs-health-check${SUFFIX_NAME}
