@@ -1,9 +1,10 @@
 #!/usr/bin/groovy
 
-@Library('github.com/hrishin/osio-pipeline@master')
+@Library('https://github.com/fabric8io/osio-pipeline@master')
+
 def STAGES = ['run', 'stage']
 
-openshift.withCluster() { // Use "default" cluster or fallback to OpenShift cluster detection
+openshift.withCluster() { //r fallback to OpenShift cluster detection
     echo "Hello from the project running Jenkins: ${openshift.project()}"
 }
 
