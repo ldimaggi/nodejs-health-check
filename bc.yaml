@@ -4,25 +4,25 @@ items:
   kind: ImageStream
   metadata:
     labels:
-      version: 1.0.2
+      version: 1.0.3
     name: nodejs-health-check
   spec: {}
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
     labels:
-      version: 1.0.2
+      version: 1.0.3
     name: nodejs-health-check-s2i
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: nodejs-health-check:1.0.2
+        name: nodejs-health-check:1.0.3
     postCommit: {}
     resources: {}
     source:
       git:
-        ref: 680901b
+        ref: f84f90c
         uri: https://github.com/hrishin/nodejs-health-check.git
       type: Git
     strategy:
