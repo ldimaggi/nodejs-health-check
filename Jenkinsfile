@@ -4,7 +4,7 @@
 
 def STAGES = ['run', 'stage']
 
-
+sh "env"
 openshift.withCluster() { //r fallback to OpenShift cluster detection
     echo "Hello from the project running Jenkins: ${openshift.project()}"
 }
