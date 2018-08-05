@@ -22,7 +22,7 @@ items:
     resources: {}
     source:
       git:
-        ref: ce21eaf
+        ref: 98fabc8
         uri: https://github.com/hrishin/nodejs-health-check.git
       type: Git
     strategy:
