@@ -7,8 +7,8 @@ items:
       expose: "true"
       project: nodejs-health-check
       provider: nodeshift
-      version: 2.0.0
-    name: nodejs-health-check-master
+      version: 1.0.2
+    name: nodejs-health-check
   spec:
     ports:
     - port: 8080
@@ -25,10 +25,11 @@ items:
       app: nodejs-health-check
       project: nodejs-health-check
       provider: nodeshift
-      version: 2.0.0
-    name: nodejs-health-check-master
+      version: 1.0.2
+    name: nodejs-health-check
   spec:
     replicas: 1
+    revisionHistoryLimit: 2
     selector:
       app: nodejs-health-check
       project: nodejs-health-check
@@ -39,10 +40,10 @@ items:
           app: nodejs-health-check
           project: nodejs-health-check
           provider: nodeshift
-          version: 2.0.0
+          version: 1.0.2
       spec:
         containers:
-        - image: nodejs-health-check-master
+        - image: nodejs-health-check
           livenessProbe:
             failureThreshold: 2
             httpGet:
@@ -53,7 +54,7 @@ items:
             periodSeconds: 3
             successThreshold: 1
             timeoutSeconds: 1
-          name: nodejs-health-check-master
+          name: nodejs-health-check
           ports:
           - containerPort: 8080
             name: http
@@ -73,12 +74,12 @@ items:
     triggers:
     - type: ConfigChange
     - imageChangeParams:
-        automatic: false
+        automatic: true
         containerNames:
-        - nodejs-health-check-master
+        - nodejs-health-check
         from:
           kind: ImageStreamTag
-          name: nodejs-health-check-master:latest
+          name: nodejs-health-check:1.0.2
       type: ImageChange
 - apiVersion: route.openshift.io/v1
   kind: Route
@@ -86,13 +87,13 @@ items:
     labels:
       project: nodejs-health-check
       provider: nodeshift
-      version: 2.0.0
-    name: nodejs-health-check-master
+      version: 1.0.2
+    name: nodejs-health-check
   spec:
     port:
       targetPort: 8080
     to:
       kind: Service
-      name: nodejs-health-check-master
+      name: nodejs-health-check
 kind: List
 metadata: {}

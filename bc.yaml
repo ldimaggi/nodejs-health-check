@@ -3,45 +3,42 @@ items:
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-    name: nodejs-health-check-master
+    labels:
+      version: 1.0.2
+    name: nodejs-health-check
   spec: {}
-- apiVersion: image.openshift.io/v1
-  kind: ImageStream
-  metadata:
-    name: runtime-master
-  spec:
-    tags:
-    - from:
-        kind: DockerImage
-        name: bucharestgold/centos7-s2i-nodejs:10.x
-      name: latest
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
-    name: nodejs-health-check-master
+    labels:
+      version: 1.0.2
+    name: nodejs-health-check-s2i
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: nodejs-health-check-master:latest
+        name: nodejs-health-check:1.0.2
     postCommit: {}
     resources: {}
     source:
       git:
-        ref: 786b543
+        ref: 680901b
         uri: https://github.com/hrishin/nodejs-health-check.git
       type: Git
     strategy:
       sourceStrategy:
         from:
-          kind: ImageStreamTag
-          name: runtime-master:latest
+          kind: DockerImage
+          name: bucharestgold/centos7-s2i-nodejs:10.x
         incremental: true
       type: Source
     triggers:
     - github:
-        secret: jvxqmnIVAwG6DDL4JLcKTJ6tQY3ifoOrDaJuOiaB
+        secret: PU4a4k2ysQewcvtR8mVnrVaaQ8MCumfLwk8fTOyE
       type: GitHub
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
   status:
     lastVersion: 0
 kind: List

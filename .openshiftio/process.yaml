@@ -3,44 +3,38 @@ items:
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-    name: nodejs-health-check-master
+    labels:
+      version: 1.0.1
+    name: nodejs-health-check
   spec: {}
-- apiVersion: image.openshift.io/v1
-  kind: ImageStream
-  metadata:
-    name: runtime-master
-  spec:
-    tags:
-    - from:
-        kind: DockerImage
-        name: bucharestgold/centos7-s2i-nodejs:10.x
-      name: latest
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
-    name: nodejs-health-check-master
+    labels:
+      version: 1.0.1
+    name: nodejs-health-check-s2i
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: nodejs-health-check-master:latest
+        name: nodejs-health-check:1.0.1
     postCommit: {}
     resources: {}
     source:
       git:
-        ref: 786b543
+        ref: 680901b
         uri: https://github.com/hrishin/nodejs-health-check.git
       type: Git
     strategy:
       sourceStrategy:
         from:
-          kind: ImageStreamTag
-          name: runtime-master:latest
+          kind: DockerImage
+          name: bucharestgold/centos7-s2i-nodejs:10.x
         incremental: true
       type: Source
     triggers:
     - github:
-        secret: jvxqmnIVAwG6DDL4JLcKTJ6tQY3ifoOrDaJuOiaB
+        secret: PU4a4k2ysQewcvtR8mVnrVaaQ8MCumfLwk8fTOyE
       type: GitHub
     - type: ConfigChange
     - imageChange: {}
@@ -54,8 +48,8 @@ items:
       expose: "true"
       project: nodejs-health-check
       provider: nodeshift
-      version: 2.0.0
-    name: nodejs-health-check-master
+      version: 1.0.1
+    name: nodejs-health-check
   spec:
     ports:
     - port: 8080
@@ -72,10 +66,11 @@ items:
       app: nodejs-health-check
       project: nodejs-health-check
       provider: nodeshift
-      version: 2.0.0
-    name: nodejs-health-check-master
+      version: 1.0.1
+    name: nodejs-health-check
   spec:
     replicas: 1
+    revisionHistoryLimit: 2
     selector:
       app: nodejs-health-check
       project: nodejs-health-check
@@ -86,10 +81,10 @@ items:
           app: nodejs-health-check
           project: nodejs-health-check
           provider: nodeshift
-          version: 2.0.0
+          version: 1.0.1
       spec:
         containers:
-        - image: nodejs-health-check-master
+        - image: nodejs-health-check
           livenessProbe:
             failureThreshold: 2
             httpGet:
@@ -100,7 +95,7 @@ items:
             periodSeconds: 3
             successThreshold: 1
             timeoutSeconds: 1
-          name: nodejs-health-check-master
+          name: nodejs-health-check
           ports:
           - containerPort: 8080
             name: http
@@ -122,10 +117,10 @@ items:
     - imageChangeParams:
         automatic: true
         containerNames:
-        - nodejs-health-check-master
+        - nodejs-health-check
         from:
           kind: ImageStreamTag
-          name: nodejs-health-check-master:latest
+          name: nodejs-health-check:1.0.1
       type: ImageChange
 - apiVersion: route.openshift.io/v1
   kind: Route
@@ -133,13 +128,13 @@ items:
     labels:
       project: nodejs-health-check
       provider: nodeshift
-      version: 2.0.0
-    name: nodejs-health-check-master
+      version: 1.0.1
+    name: nodejs-health-check
   spec:
     port:
       targetPort: 8080
     to:
       kind: Service
-      name: nodejs-health-check-master
+      name: nodejs-health-check
 kind: List
 metadata: {}
