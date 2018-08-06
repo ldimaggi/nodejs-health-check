@@ -22,7 +22,7 @@ items:
     resources: {}
     source:
       git:
-        ref: 680901b
+        ref: b31c2bc
         uri: https://github.com/hrishin/nodejs-health-check.git
       type: Git
     strategy:
@@ -32,13 +32,7 @@ items:
           name: bucharestgold/centos7-s2i-nodejs:10.x
         incremental: true
       type: Source
-    triggers:
-    - github:
-        secret: PU4a4k2ysQewcvtR8mVnrVaaQ8MCumfLwk8fTOyE
-      type: GitHub
-    - type: ConfigChange
-    - imageChange: {}
-      type: ImageChange
+    triggers: []
   status:
     lastVersion: 0
 - apiVersion: v1

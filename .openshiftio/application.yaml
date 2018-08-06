@@ -21,17 +21,6 @@ parameters:
     displayName: Source Branch
     value: master
     required: true
-  - name: SOURCE_REPOSITORY_DIR
-    description: The location within the source repo of the application
-    displayName: Source Directory
-    value: .
-    required: true
-  - name: GITHUB_WEBHOOK_SECRET
-    description: A secret string used to configure the GitHub webhook.
-    displayName: GitHub Webhook Secret
-    required: true
-    from: '[a-zA-Z0-9]{40}'
-    generate: expression
 objects:
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
@@ -65,13 +54,7 @@ objects:
         to:
           kind: ImageStreamTag
           name: 'nodejs-health-check${SUFFIX_NAME}:${RELEASE_VERSION}'
-      triggers:
-        - github:
-            secret: '${GITHUB_WEBHOOK_SECRET}'
-          type: GitHub
-        - type: ConfigChange
-        - imageChange: {}
-          type: ImageChange
+      triggers: []
     status:
       lastVersion: 0
   - apiVersion: v1

@@ -2,10 +2,7 @@
 @Library('github.com/hrishin/osio-pipeline@cd-fixes')
 
 def STAGES = ['run', 'stage']
-
-openshift.withCluster() { //r fallback to OpenShift cluster detection
-    echo "Hello from the project running Jenkins: ${openshift.project()}"
-}
+def templateParameters = ["SUFFIX_NAME": "", "RELEASE_VERSION": "1.0.${env.BUILD_NUMBER}"]
 
 osio {
   stages = STAGES

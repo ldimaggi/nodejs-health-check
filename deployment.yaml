@@ -7,7 +7,7 @@ items:
       expose: "true"
       project: nodejs-health-check
       provider: nodeshift
-      version: 1.0.10
+      version: 1.0.3
     name: nodejs-health-check
   spec:
     ports:
@@ -25,7 +25,7 @@ items:
       app: nodejs-health-check
       project: nodejs-health-check
       provider: nodeshift
-      version: 1.0.10
+      version: 1.0.3
     name: nodejs-health-check
   spec:
     replicas: 1
@@ -40,7 +40,7 @@ items:
           app: nodejs-health-check
           project: nodejs-health-check
           provider: nodeshift
-          version: 1.0.10
+          version: 1.0.3
       spec:
         containers:
         - image: nodejs-health-check
@@ -74,12 +74,12 @@ items:
     triggers:
     - type: ConfigChange
     - imageChangeParams:
-        automatic: true
+        automatic: false
         containerNames:
         - nodejs-health-check
         from:
           kind: ImageStreamTag
-          name: nodejs-health-check:1.0.10
+          name: nodejs-health-check:1.0.3
       type: ImageChange
 - apiVersion: route.openshift.io/v1
   kind: Route
@@ -87,7 +87,7 @@ items:
     labels:
       project: nodejs-health-check
       provider: nodeshift
-      version: 1.0.10
+      version: 1.0.3
     name: nodejs-health-check
   spec:
     port:
