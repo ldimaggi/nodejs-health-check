@@ -109,7 +109,7 @@ objects:
                 successThreshold: 1
                 timeoutSeconds: 1
               image: ""
-              name: nodejs-health-check${SUFFIX_NAME}
+              name: nodejs-health-check
               securityContext:
                 privileged: false
               ports:
@@ -134,7 +134,7 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - nodejs-health-check${SUFFIX_NAME}
+              - nodejs-health-check
             from:
               kind: ImageStreamTag
               name: "nodejs-health-check${SUFFIX_NAME}:${RELEASE_VERSION}"
