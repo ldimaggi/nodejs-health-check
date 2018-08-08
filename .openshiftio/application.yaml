@@ -108,7 +108,7 @@ objects:
                 periodSeconds: 3
                 successThreshold: 1
                 timeoutSeconds: 1
-              image: "nodejs-health-check${SUFFIX_NAME}"
+              image: "nodejs-health-check${SUFFIX_NAME}:${RELEASE_VERSION}"
               name: nodejs-health-check
               securityContext:
                 privileged: false
@@ -137,7 +137,7 @@ objects:
               - nodejs-health-check
             from:
               kind: ImageStreamTag
-              name: 'nodejs-health-check${SUFFIX_NAME}:${RELEASE_VERSION}'
+              name: "nodejs-health-check${SUFFIX_NAME}:${RELEASE_VERSION}"
   - apiVersion: v1
     kind: Route
     metadata:
