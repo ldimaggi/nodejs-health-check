@@ -3,15 +3,16 @@
 
 nodeJs {
 
-    templateConfig = ["RELEASE_VERSION" : "1.0.${env.BUILD_NUMBER}"]
 
     cd {
-        template = processTemplate templateConfig
+        appConfig = ["RELEASE_VERSION" : "1.0.${env.BUILD_NUMBER}"]
 
-        build template
+        app = processTemplate appConfig
 
-        deploy 'stage', template
+        build app
 
-        deploy 'run', template, true
+        deploy app, 'stage'
+
+        deploy app, 'run', approval: "manual"
     }
 }
