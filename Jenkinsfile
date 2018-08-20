@@ -1,12 +1,14 @@
 #!/usr/bin/groovy
 @Library('github.com/hrishin/fabric8-pipeline-library@nodejs')_
 
-templateConfig = "jenkinsfile"
 
 nodeJs {
 
+    templateConfig = ['RELEASE_VERSION' : '1.0.${env.BUILD_NUMBER}']
+
     cd {
-        //echo "$templateConfig1"
-        //echo "$template"
+        template = processTemplate templateConfig
+
+        echo "template ${template}"
     }
 }
