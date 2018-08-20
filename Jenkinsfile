@@ -4,9 +4,9 @@
 osio {
 
     cd {
-        appConfig = ["RELEASE_VERSION" : "1.0.${env.BUILD_NUMBER}"]
+        //appConfig = ["RELEASE_VERSION" : "1.0.${env.BUILD_NUMBER}"]
 
-        app = processTemplate appConfig
+        app = processTemplate(release_version: "1.0.${env.BUILD_NUMBER}")
 
         build app: app
 
