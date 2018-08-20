@@ -12,6 +12,6 @@ nodeJs {
 
         deploy 'stage', template
 
-        deploy 'run', template,  manual=true
+        deploy manual=true, 'run', template
     }
 }
