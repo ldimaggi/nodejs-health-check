@@ -11,8 +11,8 @@ nodeJs {
 
         build app
 
-        deploy app, 'stage'
+        deploy app: app, env: 'stage'
 
-        deploy app, 'run', approval: "manual"
+        deploy app: app, env: 'run', approval: "manual"
     }
 }
