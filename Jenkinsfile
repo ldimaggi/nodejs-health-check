@@ -12,5 +12,7 @@ nodeJs {
         build template
 
         deploy 'stage', template
+
+        deploy 'run', template,  true
     }
 }
