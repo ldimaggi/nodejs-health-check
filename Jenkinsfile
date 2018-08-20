@@ -9,7 +9,7 @@ nodeJs {
 
         app = processTemplate appConfig
 
-        build app
+        build app: app
 
         deploy app: app, env: 'stage'
 
