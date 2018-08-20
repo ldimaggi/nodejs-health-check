@@ -9,6 +9,6 @@ nodeJs {
     cd {
         template = processTemplate templateConfig
 
-        echo "template ${template}"
+        build template
     }
 }
