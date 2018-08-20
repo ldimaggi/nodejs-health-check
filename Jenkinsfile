@@ -4,7 +4,7 @@
 
 nodeJs {
 
-    templateConfig = ['RELEASE_VERSION' : '1.0.${env.BUILD_NUMBER}']
+    templateConfig = ["RELEASE_VERSION" : "1.0.${env.BUILD_NUMBER}"]
 
     cd {
         template = processTemplate templateConfig
