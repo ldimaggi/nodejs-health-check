@@ -10,5 +10,7 @@ nodeJs {
         template = processTemplate templateConfig
 
         build template
+
+        deploy 'stage', template
     }
 }
