@@ -9,6 +9,9 @@ osio {
 
     cd {
         app = processTemplate(release_version: "1.0.${env.BUILD_NUMBER}")
+        spawn(image: "node") {
+          sh "npm run prepare"
+        }
         build app: app
         deploy app: app, env: 'stage'
         // deploy app: app, env: 'run', approval: "manual"
