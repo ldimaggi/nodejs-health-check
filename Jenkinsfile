@@ -8,7 +8,7 @@ osio {
     }
 
     cd {
-      spawn image: 'oc' {
+      spawn(image: 'oc') {
         sh """
             oc whoami
             oc whoami --show-server
