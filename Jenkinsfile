@@ -12,5 +12,6 @@ osio {
         build app: app
         echo "going to deploy ..."
         deploy app: app, env: 'stage'
+        deploy app: app, env: 'run', approval: 'manual'
     }
 }
