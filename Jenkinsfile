@@ -10,6 +10,7 @@ osio {
     cd {
         app = processTemplate(release_version: "1.0.${env.BUILD_NUMBER}")
         build app: app
+        echo "going to deploy ..."
         deploy app: app, env: 'stage'
     }
 }
