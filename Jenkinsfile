@@ -8,6 +8,12 @@ osio {
     }
 
     cd {
+
+      v =  "1.0.${env.BUILD_NUMBER}"
+      app = processTemplate() {
+        // override the default release version parameter
+        release_version = v
+      }
       app = processTemplate() {
         // override the default release version parameter
         release_version = "1.0.${env.BUILD_NUMBER}"
