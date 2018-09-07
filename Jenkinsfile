@@ -11,19 +11,22 @@ osio {
       app = processTemplate()
 
       echo "----------------------------------------------------"
-      v =  "1.0.${env.BUILD_NUMBER}"
-      app = processTemplate() {
-        // override the default release version parameter
-        release_version = v
-      }
+
+      app = processTemplate(params: [
+        release_version: "1.0.${env.BUILD_NUMBER}"
+      ])
+
+      echo "----------------------------------------------------"
+      app = processTemplate(path: ".openshiftio/applcation.yaml", params: [
+        release_version: "1.0.${env.BUILD_NUMBER}"
+      ])
       echo "----------------------------------------------------"
 
-      app = processTemplate() {
-        // override the default release version parameter
+      app = processTemplate(path: ".openshiftiofoobar/applcation.yaml", params: [
         release_version = "1.0.${env.BUILD_NUMBER}"
-      }
-
+      ])
       echo "----------------------------------------------------"
+
       build app: app
     }
 }
