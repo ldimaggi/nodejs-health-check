@@ -8,17 +8,22 @@ osio {
     }
 
     cd {
+      app = processTemplate()
 
+      echo "----------------------------------------------------"
       v =  "1.0.${env.BUILD_NUMBER}"
       app = processTemplate() {
         // override the default release version parameter
         release_version = v
       }
+      echo "----------------------------------------------------"
+
       app = processTemplate() {
         // override the default release version parameter
         release_version = "1.0.${env.BUILD_NUMBER}"
       }
+
+      echo "----------------------------------------------------"
       build app: app
-      deploy app: app, env: 'stage'
     }
 }
