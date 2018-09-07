@@ -8,8 +8,10 @@ osio {
     }
 
     cd {
-        app = processTemplate(release_version: "1.0.${env.BUILD_NUMBER}")
-        build app: app
-        deploy app: app, env: 'stage'
+      app = processTemplate() {
+        release_version = "1.0.${env.BUILD_NUMBER}"
+      }
+      build app: app
+      deploy app: app, env: 'stage'
     }
 }
