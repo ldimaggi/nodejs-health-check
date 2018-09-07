@@ -3,12 +3,13 @@
 
 osio {
     ci {
-        app = processTemplate(release_version: "1.0.${env.BUILD_NUMBER}")
+        app = processTemplate()
         build app: app
     }
 
     cd {
       app = processTemplate() {
+        // override the default release version parameter
         release_version = "1.0.${env.BUILD_NUMBER}"
       }
       build app: app
