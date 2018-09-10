@@ -1,5 +1,5 @@
 #!/usr/bin/groovy
-@Library('github.com/sthaha/fabric8-pipeline-library@nodejs')_
+@Library('github.com/sthaha/fabric8-pipeline-library@config-api')_
 
 osio {
     ci {
@@ -8,23 +8,8 @@ osio {
     }
 
     cd {
-      app = processTemplate()
-
-      echo "----------------------------------------------------"
-
       app = processTemplate(params: [
         release_version: "1.0.${env.BUILD_NUMBER}"
-      ])
-
-      echo "----------------------------------------------------"
-      app = processTemplate(file: ".openshiftio/app.yaml", params: [
-        release_version: "1.0.${env.BUILD_NUMBER}"
-      ])
-      echo "----------------------------------------------------"
-
-      // fail
-      app = processTemplate(file: ".openshiftiofoobar/applcation.yaml", params: [
-        release_version = "1.2.${env.BUILD_NUMBER}"
       ])
       echo "----------------------------------------------------"
 
