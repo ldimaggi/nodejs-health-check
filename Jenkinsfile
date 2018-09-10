@@ -2,17 +2,18 @@
 @Library('github.com/sthaha/fabric8-pipeline-library@config-api')_
 
 osio {
+    config runtime: 'node'
+
     ci {
-        app = processTemplate()
+        def app = processTemplate()
         build app: app
     }
 
     cd {
-      app = processTemplate(params: [
+      def app = processTemplate(params: [
         release_version: "1.0.${env.BUILD_NUMBER}"
       ])
-      echo "----------------------------------------------------"
-
       build app: app
+      deploy app: app, env: 'stage'
     }
 }
