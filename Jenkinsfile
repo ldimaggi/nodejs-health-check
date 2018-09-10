@@ -17,7 +17,7 @@ osio {
       ])
 
       echo "----------------------------------------------------"
-      app = processTemplate(file: ".openshiftio/applcation.yaml", params: [
+      app = processTemplate(file: ".openshiftio/app.yaml", params: [
         release_version: "1.0.${env.BUILD_NUMBER}"
       ])
       echo "----------------------------------------------------"
